@@ -31,7 +31,7 @@ app = FastAPI(
 # CORS - allow frontend to connect
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.ALLOWED_ORIGINS,
+    allow_origins=settings.ALLOWED_ORIGINS + ["https://smartshelf-two.vercel.app"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -56,6 +56,13 @@ async def root():
 @app.get("/health")
 async def health():
     return {"status": "ok"}
+
+
+# Vercel serverless handler
+def handler(event, context):
+    from mangum import Mangum
+    handler = Mangum(app)
+    return handler(event, context)
 
 
 if __name__ == "__main__":
