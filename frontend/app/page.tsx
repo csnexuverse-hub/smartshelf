@@ -1,8 +1,9 @@
 'use client'
 import { useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import { Redirect } from 'next/navigation'
 
 export default function Home() {
+  redirect('/login')
   const router = useRouter()
   useEffect(() => {
     const token = localStorage.getItem('token')
